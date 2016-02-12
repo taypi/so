@@ -34,12 +34,13 @@ int main()
 
 int checkSize(int size){
     while (size < 1){
-        printf("Tamanho da sequência: ");
+        printf("Tamanho da sequencia: ");
         scanf("%d", &size);
     }
     return size;
 }
 
+/* Calcula fibonacci */
 void calcFib(int size){
     int i;
     unsigned long long int fib[size];

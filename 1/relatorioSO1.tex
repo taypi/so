@@ -1,0 +1,645 @@
+%% abtex2-modelo-artigo.tex, v-1.9.5 laurocesar
+%% Copyright 2012-2015 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-artigo.tex and
+%% abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Artigo Acadêmico em conformidade com
+% ABNT NBR 6022:2003: Informação e documentação - Artigo em publicação 
+% periódica científica impressa - Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional
+	]{abntex2}
+
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{mathtools}
+\usepackage{listings}
+% ---
+		
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Sistemas Operacionais\\ Processos e Threads}
+\autor{Taynara Pinheiro de Paiva}
+\local{Natal/RN}
+\data{Outubro de 2015}
+\instituicao{%
+  Universidade Federal do Rio Grande do Norte
+  \par
+  Departamente de Engenharia de Computação e Automação}
+\tipotrabalho{Relatório (Graduação)}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\preambulo{Relatório correspondente ao método avaliativo da primeira unidade da disciplina de Sistemas Operacionais da Universidade Federal do Rio Grande do Norte.}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={Processos e Threads},
+	    pdfcreator={LaTeX},
+		pdfkeywords={process}{thread}{operational system}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+\lstset{language=C,basicstyle=\ttfamily, showstringspaces=false, keywordstyle=\color{blue}\ttfamily,stringstyle=\color{red}\ttfamily,commentstyle=\color{green}\ttfamily}  
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+%---
+%
+% Se desejar escrever o artigo em duas colunas, descomente a linha abaixo
+% e a linha com o texto ``FIM DE ARTIGO EM DUAS COLUNAS''.
+% \twocolumn[    		% INICIO DE ARTIGO EM DUAS COLUNAS
+%
+%---
+% página de titulo
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% ---
+\imprimirfolhaderosto
+% ---
+
+% resumo em português
+\section*{Resumo}
+Este relatório corresponde ao método avaliativo aplicado na primeira unidade da disciplina Sistemas Operacionais do curso de Engenharia de Computação da Universidade Federal do Rio Grande do Norte (UFRN). Nele é apresentada a utilização de ferramentas de gerenciamento de processos, como comunicação interprocessos e manipulação de threads, utilizando a API POSIX.
+ 
+\newpage
+
+% ]  				% FIM DE ARTIGO EM DUAS COLUNAS
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Nos sistemas de computação mais antigos, apenas um programa era executado por vez, tendo total acesso sobre os recursos do sistema. No entanto, esse comportamento não era conveniente. Por isso, foi introduzida a ideia de processos. 
+Processos são atividades (programas) executadas pela CPU, independente do sistema. Como, por exemplo, os programas abertos pelos usuários do sistema, como um editor de texto, e as próprias atividades programadas do sistema operacional, como o gerenciamento da memória. Geralmente o processo inclui uma sessão de texto, atividade corrente (contador do programa) e o conteúdo dos registradores do processador. Também inclui uma pilha do processo, uma sessão de dados (inclui as variáveis globais) e pode incluir uma heap.
+
+Nem todos os programas são considerados processos, pois, programas são passivos, ou seja, por si só não executam nada no sistema. Já os processos são ativos, como por exemplo, um contador especificando uma próxima instrução. Um programa se torna um processo quando seu executável é carregado na memória. Nos sistemas atuais vários processos são carregados na memória ao mesmo tempo, e executados concorrentemente.
+
+Processos que são executados simultaneamente no sistema operacional podem ser independentes ou cooperativos. Sistemas independentes não afetam nem são afetados por outros processos que estão sendo executados. Já os cooperativos compartilham dados entre si, ou seja, são diretamente afetados por outros processos.
+
+Para que haja comunicação entre os processos cooperativos, é necessário que eles estabeleçam uma região de memória compartilhada. Nessa região ambos processos poderão escrever e ler informações. Mas, como isso não é permitido normalmente, esses processos precisam aceitar o compartilhamento, e, a partir daí, o sistema operacional não mais se responsabilizará pelo que ocorrer nessa região de memória. Os processos envolvidos terão de garantir que não haja gravação simultânea de dados, apesar de poderem ler ao mesmo tempo.
+
+Um processo é composto por uma ou várias threads. Thread é a unidade básica de utilização da CPU que forma a base dos sistemas de computação multithreads. Elas são compostas por um ID, um contador de programa, um conjunto de registradores e uma pilha e compartilham com outras do mesmo processo a seção de código, a seção de dados e outros recursos do sistema operacional.
+\newpage
+
+% ----------------------------------------------------------
+% Seção de explicações
+% ----------------------------------------------------------
+\section*{Desenvolvimento}
+\addcontentsline{toc}{section}{Desenvolvimento}
+
+\subsection*{Métodos}
+
+Todo o trabalho foi feito utilizando a linguagem de programação C, juntamente com a API POSIX, no ambiente de desenvolvimento Qt Creator. Todos os códigos fontes estão devidamente comentados e explicados nos anexos correspondentes.
+
+\subsection*{Questões}
+
+Para aplicação dos conhecimentos sobre processos e threads, foram solucionados três questões presentes no livro \textit{Fundamentos de Sistemas Operacionais} - 8ª edição.
+
+\subsubsection*{Questão 1}
+
+A sequência de Fibonacci é a série de números 0, 1, 1, 2, 3, 5, 8, … Formalmente, ela
+pode ser expressa como:
+
+\begin{equation*}
+fib_0 = 0
+\end{equation*}
+\begin{equation*}
+fib_1 = 1
+\end{equation*}
+\begin{equation*}
+fib_n = fib_n_-_1 + fib_n_-_2
+\end{equation*}
+
+Escreva um programa usando chamada de sistema para criação de processos que gere a
+sequência de Fibonacci no processo filho criado. O número da sequência será fornecido
+na linha de comando. Por exemplo, se 5 for fornecido, os cinco primeiros números da
+sequência serão exibidos pelo processo filho. Já que os processos pai e filho têm suas
+próprias cópias dos dados, será necessário que o filho exiba a sequência. Faça o pai
+invocar a chamada de sistema para espera (wait(), por exemplo na API POSIX) para
+esperar o processo filho ser concluído antes de sair do programa. Execute verificação de
+erros necessária para assegurar que um número negativo seja passado na linha de
+comando.
+
+\subsubsection*{Questão 2}
+
+No programa anterior, o processo filho deve exibir a sequência de Fibonacci, já que pai e
+o filho têm suas próprias cópias dos dados. Outra abordagem para o projeto desse
+programa é o estabelecimento de um segmento de memória compartilhada entre os
+processos pai e filho. Essa técnica permite que o filho grave o conteúdo da sequência de
+Fibonacci no segmento de memória compartilhada e faz o pai exibir a sequência quando o
+filho é concluído. Já que a memória é compartilhada, qualquer alteração que o filho fizer
+também será refletida no processo pai. Assim sendo, faça um programa para resolver a
+questão da sequência de Fibonacci do programa anterior, mas utilizando memória
+compartilhada para comunicação entre os processos pai e filho. Outra modificação é que,
+dessa vez, a exibição da sequência é responsabilidade do processo pai.
+
+O processo pai tem que seguir os passos abaixo:
+
+1. Aceita o parâmetro passado na linha de comando e executa verificação de erros.
+
+2. Cria um segmento de memória compartilhada.
+
+3. Anexa o segmento de memória compartilhada ao seu espaço de endereçamento.
+
+4. Gera o processo filho e invoca a chamada de sistema para esperar o filho terminar.
+
+5. Filho grava o valor da sequência de Fibonacci no segmento de memória
+compartilhada, desanexa memória e finaliza.
+
+6. Pai desanexa e remove o segmento de memória compartilhada.
+
+Já que o processo filho é uma cópia do pai, a região de memória compartilhada será
+anexada ao espaço de endereço do filho e do pai. O processo filho gravará então a
+sequência de Fibonacci na memória compartilhada e, para concluir, desanexará o
+segmento.
+
+Uma questão relacionada a processos em cooperação envolve problemas de
+sincronização. Neste exercício, os processos pai e filho devem estar sincronizados para
+que o pai não exiba a sequência de Fibonacci antes que o filho termine de gerar a
+sequência. Esses dois processos serão sincronizados com o uso da chamada de sistema
+para espera, o que fará com que ele seja suspenso até o processo filho terminar.
+
+\subsubsection*{Questão 3}
+
+Dadas duas matrizes, A e B, onde a matriz A contém M linhas e K colunas e a matriz B
+contém K linhas e N colunas, o produto das matrizes A e B é a matriz C, onde C contém
+M linhas e N colunas. A entrada da matriz C para a linha i, coluna j (Cij) é a soma dos
+produtos dos elementos da linha i da matriz A e coluna j da matriz B. Isto é:
+\begin{equation*}
+C_i_j = \displaystyle\sum _{n=1}^{k} A_i_n + B_n_j
+\end{equation*}
+Faça um programa de forma que cada elemento Cij seja calculado em um thread de
+trabalho separado. Isso envolverá a criação de M x N threads de trabalho. O thread
+principal – ou pai – inicializará as matrizes A e B e alocará memória suficiente para a
+matriz C, que conterá o produto das matrizes A e B. Essas matrizes serão declaradas
+como dados globais para que cada thread de trabalho tenha acesso a elas. O thread
+principal deverá passar os índices i e j para que o(s) thread(s) filhos(s) calculem o
+elemento Cij correspondente.
+\newpage
+
+\subsection*{Resultados}
+
+\subsubsection*{Questão 1}
+
+É possível ver na Figura 1 que os cálculos foram realizados com sucesso e o comportamento do processo pai e filho ocorreram como esperado, no qual o processo pai inicia, dando origem ao processo filho, que executa e termina, enquanto o pai espera sua finalização para poder terminar.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=15cm]{fib.png}
+\caption{Fibonacci}
+\end{figure}
+
+\subsubsection*{Questão 2}
+
+Também podemos perceber que na Figura 2, apesar de utilizarmos um método diferente, o resultado seguiu o mesmo padrão.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=15cm]{sharedFib.png}
+\caption{Memória compartilhada}
+\end{figure}
+
+\subsubsection*{Questão 3}
+
+Para fazermos essa questão, pegamos duas matrizes como padrão:
+
+\begin{equation*}
+A = 
+\begin{pmatrix}
+  1 & 4 \\
+  2 & 5 \\
+  3 & 6 \\
+ \end{pmatrix}
+ \end{equation*}
+
+ \begin{equation*}
+ B =
+ \begin{pmatrix}
+  8 & 7 & 6 \\
+  5 & 4 & 3 \\
+ \end{pmatrix}
+ \end{equation*}
+
+Cujo resultado corresponde ao que obtivemos com o uso de threads.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=15cm]{matrix.png}
+\caption{Multiplicação de matrizes}
+\end{figure}
+\newpage
+
+\section*{Conclusão}
+
+Com esse trabalho podemos perceber como o uso de processos e threads podem ser úteis em vários aspectos diferentes. Eles são muito úteis quando temos sistemas rodando paralelamente com mais de um processador, porque agilizam a execução de tarefas simultâneas em vários processadores. 
+
+\newpage
+
+\begin{center}
+\section*{Bibliografia}
+\end{center}
+
+SILBERSCHATZ, A.; GALVIN, P.B.; GAGNE, G. Fundamentos de Sistemas Operacionais. Rio de Janeiro, 2010.
+
+\newpage 
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Há diversas soluções prontas para glossário em LaTeX. 
+% Consulte o manual do abnTeX2 para obter sugestões.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+\cftinserthook{toc}{AAA}
+% ---
+% Inicia os anexos
+% ---
+%\anexos
+\begin{anexosenv}
+
+\chapter{Questão 1}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int checkSize(int);
+
+void calcFib(int);
+
+int main()
+{
+    int size = 0;
+    /* checando valores negativos */
+    size = checkSize(size);
+
+    pid_t pid; /* id do processo */
+    pid = fork(); /* fork do processo */
+
+    if (pid < 0) { /* Aconteceu um erro */
+        fprintf(stderr, "Fork falhou\n");
+    }
+    else if (pid == 0) { /* Processo filho */
+        printf("Comeco do processo filho...\n Sequencia: [");
+        calcFib(size);
+        printf("] \nFim do processo filho...\n");
+    }
+    else { /* Processo pai */
+        printf ("Comeco do processo pai...\n");
+        wait(NULL);
+        printf("Fim do processo pai...\n");
+    }
+    return 0;
+}
+
+int checkSize(int size){
+    while (size < 1){
+        printf("Tamanho da sequencia: ");
+        scanf("%d", &size);
+    }
+    return size;
+}
+
+void calcFib(int size){
+    int i;
+    unsigned long long int fib[size];
+    for (i = 0; i < size; i++){
+        if (i < 2) {
+            fib[i] = i;
+        }
+        else {
+            fib[i] = fib[i-1] + fib[i-2];
+        }
+    printf("%llu ", fib[i]);
+    }
+}
+\end{lstlisting}
+\newpage
+
+\chapter{Questão 2}
+
+\begin{lstlisting}
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+/* Define o tamanho máximo da sequencia */
+#define MAX_SEQUENCE 90
+
+typedef struct{
+    unsigned long long int fib_sequence[MAX_SEQUENCE];
+    int sequence_size;
+} shared_data;
+
+int main()
+{
+    int i;
+
+    /* Identificador para o segmento de memoria compartilhada */
+    int segment_id;
+
+    /* O tamanho (bytes) do segmento de memoria compartilhada */
+    unsigned long segment_size = sizeof(shared_data);
+
+    /* Aloca o segmento */
+    segment_id = shmget(IPC_PRIVATE, segment_size, S_IRUSR | S_IWUSR);
+
+    /* Checa o resultado do shmget */
+    if (segment_id == -1) {
+        printf("shmget falhou");
+        return 0;
+    }
+
+    /* Anexa o segmento de memoria */
+    shared_data *shared_memory = 
+    (shared_data *)shmat(segment_id, NULL, 0);
+
+    shared_memory->sequence_size = 0;
+
+    /* Checando valores negativos */
+    while (shared_memory->sequence_size < 1 || 
+    	shared_memory->sequence_size > MAX_SEQUENCE){
+
+        printf("Tamanho da sequencia: ");
+        scanf("%d", &shared_memory->sequence_size);
+    }
+
+    pid_t pid;
+    pid = fork();
+    if (pid < 0) { /* Aconteceu um erro */
+        fprintf(stderr, "Fork falhou\n");
+        return 1;
+    }
+    if (pid == 0){
+        printf("Comeco do processo filho...\n");
+        for (i = 0; i < shared_memory->sequence_size; i++){
+            if (i < 2) {
+                shared_memory->fib_sequence[i] = i;
+            }
+            else {
+                shared_memory->fib_sequence[i] = 
+                shared_memory->fib_sequence[i-1] + 
+                shared_memory->fib_sequence[i-2];
+            }
+        }
+        printf("...Fim do processo filho\n");
+    }
+    else{
+        printf("Comeco do processo pai...\n");
+        wait(NULL);
+        for(i = 0; i < shared_memory->sequence_size; i++) {
+            printf("%llu ", shared_memory->fib_sequence[i]);
+        }
+        printf("\n...Fim do processo pai\n");
+    }
+
+    /* Desanexa o segmento de memoria compartilhada */
+    shmdt(shared_memory);
+    /* Remove o segmento de memoria compartilhada */
+    shmctl(segment_id, IPC_RMID, NULL);
+
+    return 0;
+}
+\end{lstlisting}
+\newpage
+
+\chapter{Questão 3}
+
+\begin{lstlisting}
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define M 3
+#define K 2
+#define N 3
+
+int A[M][K] = { {1,4}, {2,5}, {3,6} };
+int B[K][N] = { {8,7,6}, {5,4,3} };
+int C[M][N];
+
+struct v {
+   int i; /* linha */
+   int j; /* coluna */
+};
+
+void *mult(void *); /* calcula a multiplicacao */
+
+int main() {
+    int i, j, count = 0;   
+    pthread_t tid[M*N]; /* MxN threads de trabalho */
+    pthread_attr_t attr[M*N]; /* Conjunto de atributos da thread */
+    for(i = 0; i < M; i++) {
+        for(j = 0; j < N; j++) {
+        	/* Aloca a memoria para a struct */
+            struct v *data = (struct v *) malloc(sizeof(struct v));
+            /* Atribui o contador i autal a linha da struct */
+            data->i = i;
+            /* Atribui o contador j autal a coluna da struct */
+            data->j = j; 
+            /* Obtem os atributos default */
+            pthread_attr_init(&attr[count]); 
+            /* Criacao da thread passando para ele data como parametro */
+            pthread_create(&tid[count],&attr[count],mult,data); 
+            /* Espera todas threads serem encerradas */
+            pthread_join(tid[count], NULL); 
+            count++;
+        }
+    }
+
+    /* Saida da multiplicacao */
+    for(i = 0; i < M; i++) {
+        for(j = 0; j < N; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+/* O thread assumirá o controle nessa função */
+void *mult(void *param) {
+    struct v *data = param;
+    int n;
+
+    C[data->i][data->j] = 0;
+
+    /* Somatorio da multiplicacao do elemento da linha */
+    /* vezes o correspondente na coluna atribuido a matriz C*/
+    for(n = 0; n < K; n++){
+      C[data->i][data->j] += A[data->i][n] * B[n][data->j];
+    }
+    pthread_exit(0);
+}
+\end{lstlisting}
+
+\end{anexosenv}
+
+\end{document}

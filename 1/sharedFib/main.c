@@ -34,7 +34,7 @@ int main()
     }
 
     /* Anexa o segmento de memoria */
-    shared_data *shared_memory = shmat(segment_id, NULL, 0);
+    shared_data *shared_memory = (shared_data *)shmat(segment_id, NULL, 0);
 
     shared_memory->sequence_size = 0;
 
@@ -68,9 +68,11 @@ int main()
         for(i = 0; i < shared_memory->sequence_size; i++) {
             printf("%llu ", shared_memory->fib_sequence[i]);
         }
-        printf("\n");
+        printf("\n...Fim do processo pai\n");
     }
-    printf("...Fim do processo pai\n");
+
+    /* Desanexa o segmento de memoria compartilhada */
+    shmdt(shared_memory);
     /* Remove o segmento de memoria compartilhada */
     shmctl(segment_id, IPC_RMID, NULL);
 
